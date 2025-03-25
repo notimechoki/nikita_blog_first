@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block css_files %}
+<link rel="stylesheet" href="{% static 'css/main.css' %}">
+{% endblock %}
+
+{% block content %}
+
+    <section class="posts">
+        <div class="post__cards">
+            {% for post in posts %}
+                <div class="post__card">
+                    <div class="post__img"></div>
+
+                    <a href="{% url 'post_detail' post.id %}" class="post__title">{{ post.title }}</a>
+
+                    <div class="post__body">
+                        {{ post.body|truncatewords:10 }}
+                    </div>
+
+                    <div class="post__date">
+                        {{ post.author }} • {{ post.publish }}
+                    </div>
+                    
+                </div>
+            {% endfor %}
+        </div>
+    </section>
+
+    <div class="paginator">
+        <div class="step-links">
+            {% if posts.has_previous %}
+                <a href="?page={{ posts.previous_page_number }}">Назад</a>
+            {% endif %}
+            <span class="current">
+                Страница {{ posts.number }} из {{ posts.paginator.num_pages }}
+            </span>
+            {% if posts.has_next %}
+                <a href="?page={{ posts.next_page_number }}">Вперед</a>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

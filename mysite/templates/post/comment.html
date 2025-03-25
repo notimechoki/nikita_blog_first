@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    {% if comment %}
+        <h2>Your comment has been added.</h2>
+        <a href="{% url 'post_detail' post.id %}">Back to the post</a>
+    {% else %}
+        {% include 'post/includes/comment_form.html' %}
+    {% endif%}
+{% endblock %}

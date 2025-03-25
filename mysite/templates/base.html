@@ -1,0 +1,54 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+    {% block css_files %}
+
+    {% endblock %}
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+    <header class="header">
+        <div class="header__left">
+            <h2 class="header__logo"><i class="fa-solid fa-bolt"></i> Untitled UI</h2>
+        </div>
+
+        <div class="header__middle">
+            <a href="{% url 'home' %}" class="nav__link">Home</a>
+            <a href="javascript:void(0);" class="nav__link">About</a>
+            <a href="{% url 'post_search' %}" class="nav__link">Search</a>
+        </div>
+
+        <div class="header__right">
+            {% if user.is_authenticated %}
+                <p>Hi, {{ user.username }} </p>
+                <form action="{% url 'logout' %}" method="post">
+                    {% csrf_token %}
+                    <a href="javascript:void(0);" onclick="parentNode.submit()" class="btn black">Logout</a>
+                </form>
+            {% else %}
+                <a href="{% url 'login' %}" class="btn">Log in</a>
+                <a href="{% url 'signup' %}" class="btn black">Sign up</a>
+            {% endif %}
+        </div>
+
+    </header>
+
+    <div class="content">
+        {% block content %}
+
+        {% endblock %}
+    </div>
+
+</body>
+</html>
